@@ -29,20 +29,22 @@ def tracking_with_distance_estimation(FOV, object_width, tracker_type='MEDIANFLO
     """
     if tracker_type == 'BOOSTING':
         tracker = cv2.TrackerBoosting_create()
-    if tracker_type == 'MIL':
+    elif tracker_type == 'MIL':
         tracker = cv2.TrackerMIL_create()
-    if tracker_type == 'KCF':
+    elif tracker_type == 'KCF':
         tracker = cv2.TrackerKCF_create()
-    if tracker_type == 'TLD':
+    elif tracker_type == 'TLD':
         tracker = cv2.TrackerTLD_create()
-    if tracker_type == 'MEDIANFLOW':
+    elif tracker_type == 'MEDIANFLOW':
         tracker = cv2.TrackerMedianFlow_create()
-    if tracker_type == 'GOTURN':
+    elif tracker_type == 'GOTURN':
         tracker = cv2.TrackerGOTURN_create()
-    if tracker_type == 'MOSSE':
+    elif tracker_type == 'MOSSE':
         tracker = cv2.TrackerMOSSE_create()
-    if tracker_type == "CSRT":
+    elif tracker_type == "CSRT":
         tracker = cv2.TrackerCSRT_create()
+    else:
+        raise ValueError('Please check your tracker\'s type')
 
     video = cv2.VideoCapture(0)
 
@@ -61,7 +63,7 @@ def tracking_with_distance_estimation(FOV, object_width, tracker_type='MEDIANFLO
 
     bbox = cv2.selectROI(frame, False)
 
-    ok = tracker.init(frame, bbox)
+    tracker.init(frame, bbox)
 
     while True:
         ok, frame = video.read()
